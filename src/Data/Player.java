@@ -1,4 +1,3 @@
-
 package Data;
 
 /**
@@ -7,29 +6,14 @@ package Data;
  */
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "player")
-//@XmlRootElement
-//@NamedQueries({
-//    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-//    @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"),
-//    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
-//    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
-//    @NamedQuery(name = "Users.findBySalt", query = "SELECT u FROM Users u WHERE u.salt = :salt"),
-//    @NamedQuery(name = "Users.findByEnabled", query = "SELECT u FROM Users u WHERE u.enabled = :enabled")})
-//})
 public class Player implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +23,10 @@ public class Player implements Serializable {
     private String fName;
     private String lName;
     private String position;
+    private int playerNumber;
+    private char throwingArm;
+    private char battingStance;
+    private int teamID;
     
     
     public Player()
@@ -46,13 +34,21 @@ public class Player implements Serializable {
         fName = "John";
         lName = "Doe";
         position = "unassigned";
+        playerNumber = 999; 
+        throwingArm = 'R';
+        battingStance = 'S';
+        teamID = 0;
     }
     
-    public Player(String first, String last, String pos)
+    public Player(String first, String last, String pos, int number, char arm, char stance, int team)
     {
         fName = first;
         lName = last;
         position = pos; 
+        playerNumber = number;
+        throwingArm = arm;
+        battingStance = stance; 
+        teamID = team; 
     }
     
     public void setFname(String inName)
@@ -60,9 +56,19 @@ public class Player implements Serializable {
         fName = inName;
     }
     
+    public String getFname()
+    {
+        return fName;
+    }
+    
     public void setLname(String inName)
     {
         lName = inName;
+    }
+    
+    public String getLname()
+    {
+        return lName;
     }
     
     public void setPosition(String inPosition)
@@ -70,10 +76,53 @@ public class Player implements Serializable {
         position = inPosition;
     }
     
+    public String getPosition()
+    {
+        return position;
+    }
+    
     public Integer getPlayerID()
     {
         return playerID; 
     }
     
+    public void setPlayerNumber(int inNumber)
+    {
+        playerNumber = inNumber;
+    }
     
+    public int getPlayerNumber()
+    {
+        return playerNumber;
+    }
+    
+    public void setPlayerArm(char inArm)
+    {
+        throwingArm = inArm;
+    }
+    
+    public char getPlayerArm()
+    {
+        return throwingArm;
+    }
+    
+    public void setPlayerStance(char inStance)
+    {
+        battingStance = inStance;
+    }
+    
+    public char getPlayerStance()
+    {
+        return battingStance; 
+    }
+    
+    public void setTeamID(int inTeamID)
+    {
+        teamID = inTeamID;
+    }
+    
+    public int getTeamID()
+    {
+        return teamID; 
+    }
 }

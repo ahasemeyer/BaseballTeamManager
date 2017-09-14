@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Data;
 
 import java.io.Serializable;
@@ -19,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pitcher")
 public class Pitcher implements Serializable{
+    private static final long serialVersionUID = 1L;
     
     @Id
     private int playerID;
@@ -94,56 +90,78 @@ public class Pitcher implements Serializable{
     
     public static Pitcher loadPitcherData(int inPlayerID)
     {
-        //int AB, int H, int B2, int B3, int HR, int BB, int HBP, int Sac, int SO, int CS, int SB)
         EntityManager em = Data.DBUtil.getEM();
-        Query AB = em.createNativeQuery("SELECT a.atbats FROM hitter a WHERE a.playerID=?");
-        AB.setParameter(1,inPlayerID);
-        int inAB = (int)AB.getSingleResult();
+        
+        Query wins = em.createNativeQuery("SELECT a.wins FROM pitcher a WHERE a.playerID=?");
+        wins.setParameter(1,inPlayerID);
+        int inWins = (int)wins.getSingleResult();
        
-        Query H = em.createNativeQuery("SELECT a.hits FROM hitter a WHERE a.playerID=?");
-        H.setParameter(1,inPlayerID);
-        int inH = (int)H.getSingleResult();
+        Query losses = em.createNativeQuery("SELECT a.losses FROM pitcher a WHERE a.playerID=?");
+        losses.setParameter(1,inPlayerID);
+        int inLosses = (int)losses.getSingleResult();
         
-        Query B2 = em.createNativeQuery("SELECT a.doublehit FROM hitter a WHERE a.playerID=?");
-        B2.setParameter(1,inPlayerID);
-        int inB2 = (int)H.getSingleResult();
+        Query game = em.createNativeQuery("SELECT a.games FROM pitcher a WHERE a.playerID=?");
+        game.setParameter(1,inPlayerID);
+        int inGames = (int)game.getSingleResult();
 
-        Query B3 = em.createNativeQuery("SELECT a.triplehit FROM hitter a WHERE a.playerID=?");
-        B3.setParameter(1,inPlayerID);
-        int inB3 = (int)B3.getSingleResult();        
+        Query gamesStarted = em.createNativeQuery("SELECT a.gamesstarted FROM pitcher a WHERE a.playerID=?");
+        gamesStarted.setParameter(1,inPlayerID);
+        int inGamesStarted = (int)gamesStarted.getSingleResult();
 
-        Query HR = em.createNativeQuery("SELECT a.homeruns FROM hitter a WHERE a.playerID=?");
-        HR.setParameter(1,inPlayerID);
-        int inHR = (int)HR.getSingleResult();      
+        Query saves = em.createNativeQuery("SELECT a.saves FROM pitcher a WHERE a.playerID=?");
+        saves.setParameter(1,inPlayerID);
+        int inSaves = (int)saves.getSingleResult();      
         
-        Query BB = em.createNativeQuery("SELECT a.baseonballs FROM hitter a WHERE a.playerID=?");
-        BB.setParameter(1,inPlayerID);
-        int inBB = (int)BB.getSingleResult();
+        Query saveOpp = em.createNativeQuery("SELECT a.saveopp FROM pitcher a WHERE a.playerID=?");
+        saveOpp.setParameter(1,inPlayerID);
+        int inSaveOpp = (int)saveOpp.getSingleResult();
         
-        Query HBP = em.createNativeQuery("SELECT a.hitbypitch FROM hitter a WHERE a.playerID=?");
-        HBP.setParameter(1,inPlayerID);
-        int inHBP = (int)HBP.getSingleResult();
+        Query IP = em.createNativeQuery("SELECT a.inningspitched FROM pitcher a WHERE a.playerID=?");
+        IP.setParameter(1,inPlayerID);
+        double inIP = (double)IP.getSingleResult();
         
-        Query Sac = em.createNativeQuery("SELECT a.sacfly FROM hitter a WHERE a.playerID=?");
-        Sac.setParameter(1,inPlayerID);
-        int inSac = (int)Sac.getSingleResult();
+        Query hits = em.createNativeQuery("SELECT a.hits FROM pitcher a WHERE a.playerID=?");
+        hits.setParameter(1,inPlayerID);
+        int inHits = (int)hits.getSingleResult();
         
-        Query SO = em.createNativeQuery("SELECT a.strikeouts FROM hitter a WHERE a.playerID=?");
-        SO.setParameter(1,inPlayerID);
-        int inSO = (int)SO.getSingleResult();
+        Query runs = em.createNativeQuery("SELECT a.runs FROM pitcher a WHERE a.playerID=?");
+        runs.setParameter(1,inPlayerID);
+        int inRuns = (int)runs.getSingleResult();
         
-        Query CS = em.createNativeQuery("SELECT a.caughtstealing FROM hitter a WHERE a.playerID=?");
-        CS.setParameter(1,inPlayerID);
-        int inCS = (int)CS.getSingleResult();
+        Query earnedRuns = em.createNativeQuery("SELECT a.earnedruns FROM pitcher a WHERE a.playerID=?");
+        earnedRuns.setParameter(1,inPlayerID);
+        int inER = (int)earnedRuns.getSingleResult();
         
-        Query SB = em.createNativeQuery("SELECT a.stolenbases FROM hitter a WHERE a.playerID=?");
-        SB.setParameter(1,inPlayerID);
-        int inSB = (int)SB.getSingleResult();
+        Query homeruns = em.createNativeQuery("SELECT a.homeruns FROM pitcher a WHERE a.playerID=?");
+        homeruns.setParameter(1,inPlayerID);
+        int inHR = (int)homeruns.getSingleResult();
+        
+        Query baseOnBalls = em.createNativeQuery("SELECT a.baseonballs FROM pitcher a WHERE a.playerID=?");
+        baseOnBalls.setParameter(1,inPlayerID);
+        int inBB = (int)baseOnBalls.getSingleResult();
+        
+        Query hitByPitch = em.createNativeQuery("SELECT a.hitbatters FROM pitcher a WHERE a.playerID=?");
+        hitByPitch.setParameter(1,inPlayerID);
+        int inHBP = (int)hitByPitch.getSingleResult();
+        
+        Query strikeOuts = em.createNativeQuery("SELECT a.strikeouts FROM pitcher a WHERE a.playerID=?");
+        strikeOuts.setParameter(1,inPlayerID);
+        int inSO = (int)strikeOuts.getSingleResult();
         
         Pitcher returnPitcher = new Pitcher(inPlayerID);
-        //returnHitter.updateHitter(inAB, inH, inB2, inB3, inHR, inBB, inHBP, inSac, inSO, inCS, inSB);
+        returnPitcher.updatePitcher(inWins, inLosses, inGames, inGamesStarted, inSaves, inSaveOpp, inIP, inHits, inRuns, inER, inHR, inBB, inHBP, inSO);
         
         return returnPitcher;
+    }
+
+    
+    public void printStats()
+    {
+        System.out.println("Wins: "+wins+" Losses: "+losses+" ERA: "+(String.format("%.3f", earnedRunAverage))+" Games: "+games+" Games Started: "+gamesStarted+
+                " Saves: "+saves+" Save Opp: "+saveOpp+" Innings Pitched: "+(String.format("%.1f", inningsPitched))+" Hits: "+hits+" Runs: "+runs+
+                " Earned Runs: "+earnedRuns+" Homeruns: "+homeRuns+" Base on Balls: "+baseOnBalls+" Hit Batters: "+hitBatters+" Strikeouts: "+strikeOuts+
+                " Opp Average: "+(String.format("%.3f", oppAvg))+" WHIP: "+(String.format("%.3f", WHIP)));
+       
     }
     
     public int getWins()
@@ -324,6 +342,11 @@ public class Pitcher implements Serializable{
     public void updateWHIP()
     {
         WHIP = (hits+baseOnBalls)/trueInnings();
+    }
+    
+    public int getPlayerID()
+    {
+        return playerID; 
     }
     
     private double trueInnings()

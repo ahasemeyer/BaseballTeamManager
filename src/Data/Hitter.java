@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -19,10 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "hitter")
-@XmlRootElement
-@NamedQueries({
-//@NamedQuery(name = "Hitter.findById", query = "SELECT u FROM hitter u WHERE u.playerID = :playerID")      
-})
 public class Hitter implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -113,8 +108,8 @@ public class Hitter implements Serializable {
     
     public static Hitter loadHitterData(int inPlayerID)
     {
-        //int AB, int H, int B2, int B3, int HR, int BB, int HBP, int Sac, int SO, int CS, int SB)
         EntityManager em = Data.DBUtil.getEM();
+        
         Query AB = em.createNativeQuery("SELECT a.atbats FROM hitter a WHERE a.playerID=?");
         AB.setParameter(1,inPlayerID);
         int inAB = (int)AB.getSingleResult();
@@ -298,7 +293,7 @@ public class Hitter implements Serializable {
     
     public void updateTotalBases()
     {
-        this.totalBases = hits + (doubleHit * 2) + (tripleHit * 3) + (homeRuns * 4);
+        this.totalBases = hits + (doubleHit) + (tripleHit * 2) + (homeRuns * 3);
     }
     
     public double getBattingAvg()

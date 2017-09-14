@@ -13,5 +13,6 @@
     <class>Data.Hitter</class>
     <class>Data.Pitcher</class>
     <class>Data.Manager</class>
+    <class>Data.Team</class>
   </persistence-unit>
 </persistence>
